@@ -14,8 +14,10 @@ from langchain.chains import RetrievalQA
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 
+import json
+
 QDRANT_PATH = "./local_qdrant"
-COLLECTION_NAME = "my_collection_2"
+COLLECTION_NAME = "my_collection"
 
 
 def init_page():
@@ -44,7 +46,7 @@ def select_model():
 def get_pdf_text():
     uploaded_file = st.file_uploader(
         label='上传班级和个人情况PDF文件 😇',
-        type=['pdf','txt']
+        type=['pdf']
     )
     if uploaded_file:
         pdf_reader = PdfReader(uploaded_file)
@@ -114,7 +116,8 @@ def build_qa_model(llm):
 
 
 def page_pdf_upload_and_build_vector_db():
-    st.title("PDF上传，构建940001班向量数据库")
+    st.title("请上传PDF上传，构建940001班语义搜索数据库")
+    st.markdown("*940001的光阴故事、个人情况、精彩片刻分享等等*")
     container = st.container()
     with container:
         pdf_text = get_pdf_text()
@@ -132,7 +135,7 @@ def ask(qa, query):
 
 
 def page_ask_my_pdf():
-    st.title("提问班级和同学情况PDF(s)")
+    st.title("提问班级聚会活动情况和同学情况")
 
     llm = select_model()
     container = st.container()
@@ -153,8 +156,17 @@ def page_ask_my_pdf():
 
         if answer:
             with response_container:
-                st.markdown("# 回答")
-                st.write(answer)
+                st.markdown("## 回答")
+                # p = type(answer)
+                # st.write(p)
+                # # st.write(answer)
+                # parsed_answer = json.loads(answer)
+                answer_query = answer["query"]
+                answer_result = answer["result"]
+                st.markdown(f"**Query:** {answer_query}")
+                st.markdown(f"**Answer:** {answer_result}")
+                
+
 
 
 def main():
