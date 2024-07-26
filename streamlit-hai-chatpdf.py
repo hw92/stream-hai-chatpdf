@@ -95,7 +95,7 @@ def build_vector_store(pdf_text):
     #     path="./local_qdrant",
     #     collection_name="my_documents",
     # )
-    
+
 def build_qa_model(llm):
     qdrant = load_qdrant()
     retriever = qdrant.as_retriever(
@@ -160,12 +160,11 @@ def page_ask_my_pdf():
 def main():
     init_page()
 
-    selection = "询问 PDF(s)"
-    selection = st.sidebar.radio("Go to", ["PDF 上传", "询问 PDF(s)"])
-    if selection == "PDF 上传":
-        page_pdf_upload_and_build_vector_db()
-    elif selection == "询问 PDF(s)":
+    selection = st.sidebar.radio("Go to", ["询问 PDF(s)", "PDF 上传"])
+    if selection == "询问 PDF(s)":
         page_ask_my_pdf()
+    elif selection == "PDF 上传":
+        page_pdf_upload_and_build_vector_db() 
 
     costs = st.session_state.get('costs', [])
     st.sidebar.markdown("## Costs")
