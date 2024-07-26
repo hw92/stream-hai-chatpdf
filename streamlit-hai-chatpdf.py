@@ -95,7 +95,7 @@ def build_vector_store(pdf_text):
     #     path="./local_qdrant",
     #     collection_name="my_documents",
     # )
-
+    
 def build_qa_model(llm):
     qdrant = load_qdrant()
     retriever = qdrant.as_retriever(
