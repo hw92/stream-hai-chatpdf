@@ -30,11 +30,9 @@ def init_page():
 
 
 def select_model():
-    model = st.sidebar.radio("Choose a model:", ("GPT-3.5", "GPT-3.5-16k", "GPT-4"))
+    model = st.sidebar.radio("Choose a model:", ("GPT-3.5", "GPT-4"))
     if model == "GPT-3.5":
         st.session_state.model_name = "gpt-3.5-turbo"
-    elif model == "GPT-3.5-16k":
-        st.session_state.model_name = "gpt-3.5-turbo-16k"
     else:
         st.session_state.model_name = "gpt-4"
     
@@ -117,7 +115,7 @@ def build_qa_model(llm):
 
 def page_pdf_upload_and_build_vector_db():
     st.title("请上传PDF上传，构建940001班语义搜索数据库")
-    st.markdown("*940001的光阴故事、个人情况、精彩片刻分享等等*")
+    st.markdown("*940001的光阴故事、同学轶事和精彩片刻等等*")
     container = st.container()
     with container:
         pdf_text = get_pdf_text()
@@ -165,6 +163,7 @@ def page_ask_my_pdf():
                 answer_result = answer["result"]
                 st.markdown(f"**Query:** {answer_query}")
                 st.markdown(f"**Answer:** {answer_result}")
+                
                 
 
 
