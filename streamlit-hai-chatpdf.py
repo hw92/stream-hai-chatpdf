@@ -23,7 +23,7 @@ def init_page():
         page_title="Hai Ask My PDF(s)",
         page_icon="🤗"
     )
-    st.sidebar.title("Nav")
+    st.sidebar.title("提问")
     st.session_state.costs = []
 
 
@@ -43,7 +43,7 @@ def select_model():
 
 def get_pdf_text():
     uploaded_file = st.file_uploader(
-        label='Upload your PDF here 😇',
+        label='上传班级和个人情况PDF文件 😇',
         type=['pdf','txt']
     )
     if uploaded_file:
@@ -115,7 +115,7 @@ def build_qa_model(llm):
 
 
 def page_pdf_upload_and_build_vector_db():
-    st.title("PDF Upload")
+    st.title("PDF上传，构建940001班向量数据库")
     container = st.container()
     with container:
         pdf_text = get_pdf_text()
@@ -133,7 +133,7 @@ def ask(qa, query):
 
 
 def page_ask_my_pdf():
-    st.title("Ask My PDF(s)")
+    st.title("提问班级和同学情况PDF(s)")
 
     llm = select_model()
     container = st.container()
@@ -154,17 +154,18 @@ def page_ask_my_pdf():
 
         if answer:
             with response_container:
-                st.markdown("## Answer")
+                st.markdown("# 回答")
                 st.write(answer)
 
 
 def main():
     init_page()
 
-    selection = st.sidebar.radio("Go to", ["PDF Upload", "Ask My PDF(s)"])
-    if selection == "PDF Upload":
+    selection = "询问 PDF(s)"
+    selection = st.sidebar.radio("Go to", ["PDF 上传", "询问 PDF(s)"])
+    if selection == "PDF 上传":
         page_pdf_upload_and_build_vector_db()
-    elif selection == "Ask My PDF(s)":
+    elif selection == "询问 PDF(s)":
         page_ask_my_pdf()
 
     costs = st.session_state.get('costs', [])
